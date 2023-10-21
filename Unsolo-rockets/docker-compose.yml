@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+ API:
+  container_name: unsolo-rockets
+  image: favouritedan/unsolo-rockets:latest
+  ports:
+   - "8980:8080"
+  depends_on:
+   - unsolo_rockets_db
+  environment:
+   - SPRING_DATASOURCE_URL=jdbc:postgresql://unsolo_rockets_db:5432/unsolo_rockets
+   - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
+   - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.PostgreSQLDialect
+   - SPRING_DATASOURCE_USERNAME=postgres
+   - SPRING_DATASOURCE_PASSWORD=password
+   - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+ unsolo_rockets_db:
+  container_name: unsolo_rockets_db
+  image: postgres:13.3-alpine
+  ports:
+   - "5433:5432"
+  environment:
+   - SPRING_DATASOURCE_USERNAME=postgres
+   - SPRING_DATASOURCE_PASSWORD=password
+   - POSTGRES_DB=unsolo_rockets
+   - POSTGRES_HOST_AUTH_METHOD=trust
+
+
+
+
+
